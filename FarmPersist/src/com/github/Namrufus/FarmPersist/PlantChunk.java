@@ -89,8 +89,6 @@ public class PlantChunk {
 
 		plants = new HashMap<Coords, Plant>();
 		
-		plugin.getLogger().info("loading chunk: "+index);
-		
 		try {
 			loadPlantsStmt.setInt(1, index);
 			loadPlantsStmt.execute();
@@ -135,8 +133,6 @@ public class PlantChunk {
 	public void unload(Connection conn) {
 		if (!loaded)
 			return;
-		
-		plugin.getLogger().info("unloading chunk: "+index);
 		
 		try {
 			// first, delete the old data
