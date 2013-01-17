@@ -71,7 +71,8 @@ public final class FarmPersist extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void onBlockGrow(BlockGrowEvent e) {
-		Material cropMat = e.getBlock().getType();
+		return;
+		/*Material cropMat = e.getBlock().getType();
 		
 		// check if we need to intervene
 		Crop crop = crops.get(cropMat);
@@ -96,7 +97,7 @@ public final class FarmPersist extends JavaPlugin implements Listener {
 		growBlock(block,coords,plant.getGrowth());
 		
 		// cancel the event as the growth amount has already been specified
-		e.setCancelled(true);
+		e.setCancelled(true);*/
 	}
 	
 	public void growBlock(Block block, Coords coords, float growth) {

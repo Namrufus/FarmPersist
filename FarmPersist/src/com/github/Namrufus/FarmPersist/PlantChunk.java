@@ -89,42 +89,41 @@ public class PlantChunk {
 
 		plants = new HashMap<Coords, Plant>();
 		
+		plugin.getLogger().info("loading chunk: "+index);
+		
 		try {
 			loadPlantsStmt.setInt(1, index);
 			loadPlantsStmt.execute();
 			ResultSet rs = loadPlantsStmt.getResultSet();
-			if (!rs.isAfterLast()) {
-				do {
-					int w = rs.getInt(1);
-					int x = rs.getInt(2);
-					int y = rs.getInt(3);
-					int z = rs.getInt(4);
-					long date = rs.getLong(5);
-					float growth = rs.getFloat(6);
+			while (rs.next()) {
+				int w = rs.getInt(1);
+				int x = rs.getInt(2);
+				int y = rs.getInt(3);
+				int z = rs.getInt(4);
+				long date = rs.getLong(5);
+				float growth = rs.getFloat(6);
 			
-					// if the plant does not correspond to an actual crop, don't load it
-					if (chunk != null && !plugin.getCrops().containsKey(chunk.getBlock(x, y, z).getType())) {
-						continue;
-					}
+				// if the plant does not correspond to an actual crop, don't load it
+				if (chunk != null && !plugin.getCrops().containsKey(chunk.getBlock(x, y, z).getType())) {
+					continue;
+				}
 					
-					Plant plant = new Plant(date,growth);
+				Plant plant = new Plant(date,growth);
 					
-					// grow the block
-					Block block = chunk.getBlock(x, y, z);
-					Crop crop = plugin.getCrops().get(block.getType());
-					float growthAmount = crop.getGrowth(block, plant.setUpdateTime(System.currentTimeMillis()));
-					plant.addGrowth(growthAmount);
+				// grow the block
+				Block block = chunk.getBlock(x, y, z);
+				Crop crop = plugin.getCrops().get(block.getType());
+				float growthAmount = crop.getGrowth(block, plant.setUpdateTime(System.currentTimeMillis()));
+				plant.addGrowth(growthAmount);
 					
-					// and update its block
-					plugin.growBlock(block,coords,plant.getGrowth());
+				// and update its block
+				plugin.growBlock(block,coords,plant.getGrowth());
 					
-					// if the plant isn't finished growing, add it to the 
-					// plants
-					if (!(plant.getGrowth() >= 1.0))
-						plants.put(new Coords(w,x,y,z), plant);
-				} while (rs.next());
-			}
-			
+				// if the plant isn't finished growing, add it to the 
+				// plants
+				if (!(plant.getGrowth() >= 1.0))
+					plants.put(new Coords(w,x,y,z), plant);
+			} 			
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -136,6 +135,8 @@ public class PlantChunk {
 	public void unload(Connection conn) {
 		if (!loaded)
 			return;
+		
+		plugin.getLogger().info("unloading chunk: "+index);
 		
 		try {
 			// first, delete the old data

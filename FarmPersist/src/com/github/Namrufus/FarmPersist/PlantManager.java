@@ -92,19 +92,17 @@ public class PlantManager {
 				
 			// load all chunks
 			ResultSet rs = stmt.executeQuery("SELECT id, w, x, z FROM chunk");
-			if (!rs.isAfterLast()) {
-				do {
-					int id = rs.getInt(1);
-					int w = rs.getInt(2);
-					int x = rs.getInt(3);
-					int z = rs.getInt(4);
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				int w = rs.getInt(2);
+				int x = rs.getInt(3);
+				int z = rs.getInt(4);
 					
-					PlantChunk pChunk = new PlantChunk(plugin, conn, id);
-					chunks.put(new Coords(w,x,0,z), pChunk);
-						
-					rs.next();
-				} while (rs.next());
-			}
+				plugin.getLogger().info("identified chunk with index "+id);
+					
+				PlantChunk pChunk = new PlantChunk(plugin, conn, id);
+				chunks.put(new Coords(w,x,0,z), pChunk);
+			} 
 			
 			// create prepared statements
 			addChunkStmt = conn.prepareStatement("INSERT INTO chunk (w, x, z) VALUES (?, ?, ?)");
@@ -380,6 +378,10 @@ public class PlantManager {
 	
 	public void add(Coords coords, Plant plant) {
 		Coords chunkCoords = new Coords(coords.w, coords.x/16, 0, coords.z/16);
+		
+		plugin.getLogger().info("coords = "+coords);
+		plugin.getLogger().info("chunkCoords = "+chunkCoords);
+		
 		PlantChunk pChunk = null;
 		if (!chunks.containsKey(chunkCoords)) {
 			try {
@@ -390,6 +392,7 @@ public class PlantManager {
 			getLastChunkIdStmt.execute();
 			ResultSet rs = getLastChunkIdStmt.getResultSet();
 			int chunkid = rs.getInt(1);
+			plugin.getLogger().info("adding pChunk "+chunkid);
 			pChunk = new PlantChunk(plugin, conn, chunkid);
 			}
 			catch (SQLException e) {
