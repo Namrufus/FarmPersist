@@ -1,0 +1,44 @@
+FarmPersist:
+ filePath: plantData.sqlite
+
+ minLoadTime: 10
+ maxLoadTime: 100
+ minUnloadTime: 40
+ maxUnloadTime: 400
+
+ reschedulePeriod: 1200
+
+ crops:
+  CARROT:
+   # the base growing time of this crop measured in days
+   baseRate: 3.0
+   # growth rate in biomes expressed in fractions of baseRate
+   # default is 1.0
+   biomes:
+    OCEAN: 0.0
+    EXTREME_HILLS: 0.1
+   # true if the growth rate is modulated by the amount of sunlight
+   needsSunlight: true
+
+   soil:
+    DIRT:
+     bonus:0.1
+     max:5
+    CLAY:
+     bonus:0.1
+     max:5
+
+   skyBonus: 2.0
+
+  CROPS:
+   baseRate: 3.0
+   biomes:
+    OCEAN: 0.0
+    EXTREME_HILLS: 0.1
+
+   dirtBonus: 0.1
+   dirtMax: 5
+   clayBonus: 0.2
+   clayMax: 5
+
+   skyBonus: 2.0
