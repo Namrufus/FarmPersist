@@ -23,6 +23,15 @@ public final class FarmPersist extends JavaPlugin implements Listener {
 	
 	@Override
 	public void onEnable() {
+	
+		// perform check for config file
+		if (!this.getConfig().isSet("FarmPersist")) {
+			this.saveDefaultConfig();
+			this.getLogger().info("Config did not exist or was invalid, default config saved.");
+		}
+		
+		this.reloadConfig();
+		
 		WorldID.init(this.getServer().getWorld("world").getUID(),
 					 this.getServer().getWorld("world_nether").getUID(),
 					 this.getServer().getWorld("world_the_end").getUID());

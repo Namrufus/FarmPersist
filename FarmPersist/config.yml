@@ -1,44 +1,183 @@
 FarmPersist:
  filePath: plantData.sqlite
 
+ unloadBatchTime: 300
+
  minLoadTime: 10
  maxLoadTime: 100
- minUnloadTime: 40
- maxUnloadTime: 400
+ minUnloadTime: 10
+ maxUnloadTime: 100
 
- reschedulePeriod: 1200
+ reschedulePeriod: 300
+
+ # The rate of growth of a crop is equal to the followoing expression:
+ # growthRate = baseRate*biomeMultiplier*sunlightLevel*skyBonus*(1+sum(soilBonus))
 
  crops:
-  CARROT:
+  CROPS:
    # the base growing time of this crop measured in days
    baseRate: 3.0
-   # growth rate in biomes expressed in fractions of baseRate
-   # default is 1.0
-   biomes:
-    OCEAN: 0.0
-    EXTREME_HILLS: 0.1
+
    # true if the growth rate is modulated by the amount of sunlight
    needsSunlight: true
 
-   soil:
-    DIRT:
-     bonus:0.1
-     max:5
-    CLAY:
-     bonus:0.1
-     max:5
-
+   # If this is nonzero, a crop's growth rate will get the
+   # specified multiplier if it is directly open to the sky
    skyBonus: 2.0
 
-  CROPS:
-   baseRate: 3.0
+   # growth rate in biomes expressed in fractions of baseRate
+   # default is 1.0
+   # no biomes are omitted from this list for clarity
    biomes:
-    OCEAN: 0.0
+    PLAINS: 1.0
+    RIVER: 0.1
+    OCEAN: 0.1
+    BEACH: 0.1
+    
+    FOREST: 1.0
+    FOREST_HILLS: 1.0
+    
+    ICE_PLAINS: 0.25
+    TAIGA: 0.25
+    TAIGA_HILLS: 0.25
+    ICE_MOUNTAINS: 0.1
+    FROZEN_OCEAN: 0.1
+    FROZEN_RIVER: 0.1
+
+    HELL: 0.1
+
+    JUNGLE: 0.25
+    JUNGLE_HILLS: 0.25
+
+    SWAMPLAND: 0.25
+
+    MUSHROOM_ISLAND: 0.1
+    MUSHROOM_SHORE: 0.1
+
+    DESERT: 0.1
+    DESERT_HILLS: 0.1
+
     EXTREME_HILLS: 0.1
+    SMALL_MOUNTAINS: 0.1
 
-   dirtBonus: 0.1
-   dirtMax: 5
-   clayBonus: 0.2
-   clayMax: 5
+    SKY: 0.1
 
+   #defines bonuses added to the growth rate depending on the thicknesses of various layers
+   #of blocks below the farmland block, these layers must be in the orders specified and must
+   #be less than the specified max thickness (or the next layer will not be counted)
+   soil:
+    CLAY:
+     bonus: 0.5
+     max: 4
+
+  CARROT:
+   # the base growing time of this crop measured in days
+   baseRate: 3.0
+
+   # true if the growth rate is modulated by the amount of sunlight
+   needsSunlight: true
+
+   # If this is nonzero, a crop's growth rate will get the
+   # specified multiplier if it is directly open to the sky
    skyBonus: 2.0
+
+   # growth rate in biomes expressed in fractions of baseRate
+   # default is 1.0
+   # no biomes are omitted from this list for clarity
+   biomes:
+    PLAINS: 1.0
+    RIVER: 0.1
+    OCEAN: 0.1
+    BEACH: 0.1
+    
+    FOREST: 1.0
+    FOREST_HILLS: 1.0
+    
+    ICE_PLAINS: 0.1
+    TAIGA: 0.1
+    TAIGA_HILLS: 0.1
+    ICE_MOUNTAINS: 0.1
+    FROZEN_OCEAN: 0.1
+    FROZEN_RIVER: 0.1
+
+    HELL: 0.1
+
+    JUNGLE: 1.0
+    JUNGLE_HILLS: 1.0
+
+    SWAMPLAND: 1.0
+
+    MUSHROOM_ISLAND: 0.5
+    MUSHROOM_SHORE: 0.5
+
+    DESERT: 0.1
+    DESERT_HILLS: 0.1
+
+    EXTREME_HILLS: 0.1
+    SMALL_MOUNTAINS: 0.1
+
+    SKY: 0.1
+
+   #defines bonuses added to the growth rate depending on the thicknesses of various layers
+   #of blocks below the farmland block, these layers must be in the orders specified and must
+   #be less than the specified max thickness (or the next layer will not be counted)
+   soil:
+    CLAY:
+     bonus: 0.5
+     max: 4
+
+  POTATO:
+   # the base growing time of this crop measured in days
+   baseRate: 3.0
+
+   # true if the growth rate is modulated by the amount of sunlight
+   needsSunlight: true
+
+   # If this is nonzero, a crop's growth rate will get the
+   # specified multiplier if it is directly open to the sky
+   skyBonus: 2.0
+
+   # growth rate in biomes expressed in fractions of baseRate
+   # default is 1.0
+   # no biomes are omitted from this list for clarity
+   biomes:
+    PLAINS: 1.0
+    RIVER: 0.1
+    OCEAN: 0.1
+    BEACH: 0.1
+    
+    FOREST: 1.0
+    FOREST_HILLS: 1.0
+    
+    ICE_PLAINS: 0.25
+    TAIGA: 0.25
+    TAIGA_HILLS: 0.25
+    ICE_MOUNTAINS: 0.5
+    FROZEN_OCEAN: 0.1
+    FROZEN_RIVER: 0.1
+
+    HELL: 0.1
+
+    JUNGLE: 0.25
+    JUNGLE_HILLS: 0.25
+
+    SWAMPLAND: 0.25
+
+    MUSHROOM_ISLAND: 0.1
+    MUSHROOM_SHORE: 0.1
+
+    DESERT: 0.1
+    DESERT_HILLS: 0.1
+
+    EXTREME_HILLS: 2.0
+    SMALL_MOUNTAINS: 2.0
+
+    SKY: 0.1
+
+   #defines bonuses added to the growth rate depending on the thicknesses of various layers
+   #of blocks below the farmland block, these layers must be in the orders specified and must
+   #be less than the specified max thickness (or the next layer will not be counted)
+   soil:
+    CLAY:
+     bonus: 0.5
+     max: 4
